@@ -66,36 +66,36 @@ public class Snake : MonoBehaviour
         _segments.Add(segment);
     }
     
-    //Criação do método ResetState
+    //Criação do método ResetState, que como o nome diz Redefine o estado(fase)
     public void ResetState()
     {
-        //
+        //definindo a direção como direita e a posição do Vector3 como 0
         this.direction = Vector2.right;
         this.transform.position = Vector3.zero;
 
-        // 
+        // usando for com uma condicional para passar por todos os elementos da lista e destrui-los
         for (int i = 1; i < _segments.Count; i++) {
             Destroy(_segments[i].gameObject);
         }
 
-        // 
+        // limpar os segmentos da lista
         _segments.Clear();
         _segments.Add(this.transform);
 
-        // 
+        // usando o for com uma condicional para passar pelos elementos da lista e fazer crescer a cobra
         for (int i = 0; i < this.initialSize - 1; i++) {
             Grow();
         }
     }
 
-    //
+    //Criação da função de colisão, em que se ativa assim que o colisor "entrar" em outro
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //
+        //condicional para fazer a cobra crescer caso a tag do objeto colidido seja "Food"
         if (other.tag == "Food") {
             Grow();
         } 
-        //
+        //condicional para caso a cobra colida com um objeto de tag "Obstacle", ativa o ResetState e recomeça o game
         else if (other.tag == "Obstacle") {
             ResetState();
         }
